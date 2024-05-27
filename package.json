@@ -12,7 +12,7 @@
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "slidev-addon-components": "^0.0.1",
-    "slidev-theme-the-unnamed": "^0.0.18",
+    "slidev-theme-the-unnamed": "^0.0.19",
     "vue": "^3.4.26"
   },
   "devDependencies": {

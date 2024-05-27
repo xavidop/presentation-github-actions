@@ -57,11 +57,30 @@ helloMsg: 👋 Hello!
 name: Xavier Portilla Edo
 job: Head of Cloud Infrastructure
 line1: "Voiceflow"
-line2: "GDE ML | GitHub Star | AWS Community Builder | Alexa Champion"
 
 social1: "@xavidop"
 social2: xavidop.me
 ---
+
+<div class="recognitions">
+  <img src="/profile/github.svg" height="50px" width="50px" />
+  <img src="/profile/awscb.png" height="50px" width="50px"/>
+  <img src="/profile/alexa.png" height="50px" width="50px"/>
+  <img src="/profile/gde.svg" height="50px" width="50px" />
+</div>
+
+<style>
+  .recognitions {
+    display: flex;
+    gap: 1rem;
+    background: #F8F8F8;
+    padding: 0.5rem;
+    border-radius: 0 0.5rem 0.5rem 0;
+    position: absolute;
+    z-index: 999;
+    bottom: 1rem;
+  }
+</style>
 
 ---
 layout: cover
@@ -574,7 +593,7 @@ act
 
 <style>
   .slidev-layout.default {
-    background: url(./slides/thankyou.jpg) no-repeat center center !important;
+    background: url(/slides/thankyou.jpg) no-repeat center center !important;
     position: relative;
   }
 
