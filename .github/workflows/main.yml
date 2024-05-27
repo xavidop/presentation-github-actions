@@ -9,6 +9,7 @@ on:
 env:
   github_artifact: github-website
   slides_artifact: slides
+  netlify_artifact: netlify
 
 jobs:
   build:
@@ -34,7 +35,15 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           name: ${{ env.github_artifact }}
-          path: dist  
+          path: dist
+      
+      - name: Build
+        run: npm run build -- --out netlify
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.netlify_artifact }}
+          path: netlify
   
   pdf_export:
     runs-on: ubuntu-latest
@@ -86,6 +95,40 @@ jobs:
         run: |
           echo "Preview Site: [${{ steps.deployment.outputs.page_url }}](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY
 
+  production-deploy:
+    runs-on: ubuntu-latest
+    needs: preview-e2e
+    environment:
+      name: production
+      url: ${{ vars.WEBSITE_URL }}
+
+    outputs:
+      website-url: ${{ vars.WEBSITE_URL }}
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.netlify_artifact }}
+          path: dist
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - uses: jsmrcaga/action-netlify-deploy@v2.0.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_DEPLOY_TO_PROD: true
+          NETLIFY_SITE_ID: ${{ vars.NETLIFY_SITE_ID }}
+          build_directory: dist
+          NETLIFY_DEPLOY_MESSAGE: "Deployed from GitHub action"
+          install_command: "echo Skipping installing the dependencies"
+          build_command: "echo Skipping building the web files"
+
+      - name: Log the result
+        run: |
+          echo "Production site: [${{ vars.WEBSITE_URL }}](${{ vars.WEBSITE_URL }})" >> $GITHUB_STEP_SUMMARY
+
   preview-e2e:
     runs-on: ubuntu-latest
     needs: preview-deploy
@@ -104,16 +147,7 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - name: Install dependencies
-        run: |
-          npm ci
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Run e2e tests
-        run: |
-          npx playwright test
-        env:
-          WEBSITE_URL: ${{ vars.WEBSITE_URL }}
-          TEST_TITLE: "Preview Test Report"
+      - uses: ./.github/actions/validate
+        with:
+          website-url: ${{ vars.WEBSITE_URL }}
+          test-title: "Preview Test Report"
