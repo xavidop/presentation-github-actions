@@ -126,7 +126,7 @@ background: ./slides/githubactions.svg
 | --- | --- |
 | GitHub Free | 2,000 |
 | GitHub Pro | 3,000 |
-| GitHub Free for orgs | 2,000 |
+| GitHub Free for orgs | 2,0002 |
 | GitHub Team | 3,000 |
 | GitHub Enterprise Cloud | 50,000 |
 
