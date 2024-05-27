@@ -15,12 +15,12 @@ test("Check name is shown", async ({ page }) => {
   await button.click();
   await button.click();
 
-  const slide = page.locator(`div[data-slidev-no="3"]`);
+  const slide = page.locator(`div[data-slidev-no="2"]`);
   await expect(slide).toBeVisible();
 
   const hello = slide.locator(`h1`);
   const name = slide.locator(`h2`);
 
   await expect(hello).toHaveText(/Hello/);
-  await expect(name).toHaveText(/Xavier Portilla Edo/);
+  await expect(name).toHaveText(/Xavi/);
 });
