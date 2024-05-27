@@ -1,0 +1,134 @@
+{
+  "$schema": "https://elio.dev/demo-time.schema.json",
+  "title": "3. Preview validate",
+  "description": "",
+  "demos": [
+    {
+      "title": "1. Open workflow",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "create",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./preview-validate/step1.yml"
+        },
+        {
+          "action": "open",
+          "path": "/.github/workflows/main.yml"
+        }
+      ]
+    },
+    {
+      "title": "2. Add the test job",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./preview-validate/step2.yml",
+            "CONTENT_POSITION": "89",
+            "HIGHLIGHT_POSITION": "96:98"
+          }
+        }
+      ]
+    },
+    {
+      "title": "3. Highlight variable",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "highlight",
+          "path": "/.github/workflows/main.yml",
+          "position": "119"
+        }
+      ]
+    },
+    {
+      "title": "4. Open the test file",
+      "steps": [
+        {
+          "action": "open",
+          "path": "/e2e/tests/slides.spec.ts"
+        }
+      ]
+    },
+    {
+      "title": "5. Open repo and set the variable",
+      "steps": [
+        {
+          "action": "executeTerminalCommand",
+          "command": "echo \"https://xavidop.github.io/presentation-github-actions/\" | pbcopy"
+        },
+        {
+          "action": "executeTerminalCommand",
+          "command": "gh browse -n | xargs -I {} echo {}/settings | xargs open"
+        }
+      ]
+    },
+    {
+      "title": "🛝 Caching",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/23"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    },
+    {
+      "title": "6. Add Playwright caching",
+      "steps": [
+        {
+          "action": "open",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "replace",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./preview-validate/step6.yml",
+          "position": "112:113"
+        },
+        {
+          "action": "highlight",
+          "path": "/.github/workflows/main.yml",
+          "position": "112:127"
+        }
+      ]
+    },
+    {
+      "title": "7. Commit and show site",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "executeTerminalCommand",
+          "command": "git add . && git commit -m '3. preview validate' && git push && gh browse -n | xargs -I {} echo {}/actions | xargs open"
+        }
+      ]
+    },
+    {
+      "title": "🛝 Highlights",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/25"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+
+{
+  "$schema": "https://elio.dev/demo-time.schema.json",
+  "title": "0. Defaults",
+  "description": "",
+  "demos": [
+    {
+      "title": "🛝 Open slides",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    }
+  ]
+}

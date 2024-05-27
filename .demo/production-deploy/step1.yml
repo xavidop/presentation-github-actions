@@ -1,0 +1,134 @@
+name: Deploy slides
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+
+env:
+  github_artifact: github-website
+  azure_artifact: azure-website
+  slides_artifact: slides
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get repository name
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
+
+      - name: Build
+        run: npm run build -- --base /${{ env.REPO_NAME }}/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          name: ${{ env.github_artifact }}
+          path: dist  
+  
+  pdf_export:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - name: Install playwright
+        run: npm i playwright-chromium
+
+      - name: Export slides
+        run: npm run export
+
+      - name: Upload slides
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.slides_artifact }}
+          path: "*.pdf"
+
+  preview-deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+
+    environment:
+      name: preview
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/configure-pages@v5
+
+      - name: Deploy
+        id: deployment 
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.github_artifact }}
+
+      - name: Log the result
+        run: |
+          echo "Preview Site: [${{ steps.deployment.outputs.page_url }}](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY
+
+  preview-e2e:
+    runs-on: ubuntu-latest
+    needs: preview-deploy
+    environment:
+      name: preview
+
+    defaults:
+      run:
+        working-directory: ./e2e
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Store Playwright's Version
+        run: |
+          PLAYWRIGHT_VERSION=$(npm ls @playwright/test | grep @playwright | sed '$!d' | sed 's/.*@//')
+          echo "Playwright's Version: $PLAYWRIGHT_VERSION"
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
+      - name: Cache Playwright Browsers for Playwright's Version
+        id: cache-playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Install Playwright Browsers
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+      - name: Run e2e tests
+        run: |
+          npx playwright test
+        env:
+          WEBSITE_URL: ${{ vars.WEBSITE_URL }}
+          TEST_TITLE: "Preview Test Report"

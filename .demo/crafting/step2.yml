@@ -1,0 +1,5 @@
+
+env:
+  github_artifact: github-website
+  azure_artifact: azure-website
+  slides_artifact: slides

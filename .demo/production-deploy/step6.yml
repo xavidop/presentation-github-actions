@@ -1,0 +1,10 @@
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      - uses: ./.github/actions/validate
+        with:
+          website-url: ${{ vars.WEBSITE_URL }}
+          test-title: "Preview Test Report"

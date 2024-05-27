@@ -1,0 +1,5 @@
+      - name: Get repository name
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
+
+      - name: Build
+        run: npm run build -- --base /${{ env.REPO_NAME }}/

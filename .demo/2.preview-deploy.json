@@ -1,0 +1,160 @@
+{
+  "$schema": "https://elio.dev/demo-time.schema.json",
+  "title": "2. Preview deploy",
+  "description": "",
+  "demos": [
+    {
+      "title": "1. Open workflow",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "create",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./preview-deploy/step1.yml"
+        },
+        {
+          "action": "open",
+          "path": "/.github/workflows/main.yml"
+        }
+      ]
+    },
+    {
+      "title": "2. PDF export job",
+      "steps": [
+        {
+          "action": "insert",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./preview-deploy/step2.yml",
+          "position": "39"
+        }
+      ]
+    },
+    {
+      "title": "3. Upload PDF",
+      "steps": [
+        {
+          "action": "highlight",
+          "path": "/.github/workflows/main.yml",
+          "position": "57:61"
+        }
+      ]
+    },
+    {
+      "title": "4. Depend on job",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./preview-deploy/step4.yml",
+            "CONTENT_POSITION": "42",
+            "HIGHLIGHT_POSITION": "40:42"
+          }
+        }
+      ]
+    },
+    {
+      "title": "5. Preview deploy",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "insert",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./preview-deploy/step5.yml",
+          "position": "63"
+        }
+      ]
+    },
+    {
+      "title": "🛝 GitHub token",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/18"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    },
+    {
+      "title": "6. Elevate token permissions",
+      "steps": [
+        {
+          "action": "insert",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./preview-deploy/step6.yml",
+          "position": "67"
+        }
+      ]
+    },
+    {
+      "title": "🛝 Output variable",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/20"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    },
+    {
+      "title": "7. Using environments",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./preview-deploy/step7.yml",
+            "CONTENT_POSITION": "72",
+            "HIGHLIGHT_POSITION": "73:75"
+          }
+        }
+      ]
+    },
+    {
+      "title": "8. Log to job summary",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./preview-deploy/step8.yml",
+            "CONTENT_POSITION": "85",
+            "HIGHLIGHT_POSITION": "86:88"
+          }
+        }
+      ]
+    },
+    {
+      "title": "9. Commit and show site",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "executeTerminalCommand",
+          "command": "git add . && git commit -m '2. preview deploy' && git push && gh browse -n | xargs -I {} echo {}/actions | xargs open"
+        }
+      ]
+    },
+    {
+      "title": "🛝 Highlights",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/21"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    }
+  ]
+}

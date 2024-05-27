@@ -1,0 +1,4 @@
+
+      - name: Log the result
+        run: |
+          echo "Preview Site: [${{ steps.deployment.outputs.page_url }}](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY

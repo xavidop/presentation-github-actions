@@ -1,0 +1,154 @@
+{
+  "$schema": "https://elio.dev/demo-time.schema.json",
+  "title": "4. Production deploy",
+  "description": "",
+  "demos": [
+    {
+      "title": "1. Open workflow",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "create",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./production-deploy/step1.yml"
+        },
+        {
+          "action": "open",
+          "path": "/.github/workflows/main.yml"
+        }
+      ]
+    },
+    {
+      "title": "2. Create the production artifact",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./production-deploy/step2.yml",
+            "CONTENT_POSITION": "39",
+            "HIGHLIGHT_POSITION": "40:46"
+          }
+        }
+      ]
+    },
+    {
+      "title": "🛝 Environments & Secrets",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/27"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    },
+    {
+      "title": "3. Deploy to production",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./production-deploy/step3.yml",
+            "CONTENT_POSITION": "143",
+            "HIGHLIGHT_POSITION": "167:168"
+          }
+        }
+      ]
+    },
+    {
+      "title": "4. Open repo, set secret, and approval",
+      "steps": [
+        {
+          "action": "executeTerminalCommand",
+          "command": "echo \"https://github-actions.elio.dev\" | pbcopy"
+        },
+        {
+          "action": "executeTerminalCommand",
+          "command": "gh browse -n | xargs -I {} echo {}/settings | xargs open"
+        }
+      ]
+    },
+    {
+      "title": "5. Create custom action",
+      "steps": [
+        {
+          "action": "create",
+          "path": "/.github/actions/validate/action.yml",
+          "contentPath": "./production-deploy/step5.yml"
+        },
+        {
+          "action": "open",
+          "path": "/.github/actions/validate/action.yml"
+        }
+      ]
+    },
+    {
+      "title": "6. Use custom action",
+      "steps": [
+        {
+          "action": "open",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "replace",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./production-deploy/step6.yml",
+          "position": "109:142"
+        },
+        {
+          "action": "highlight",
+          "path": "/.github/workflows/main.yml",
+          "position": "115:118"
+        }
+      ]
+    },
+    {
+      "title": "7. Test production deploy",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "insert",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./production-deploy/step7.yml",
+          "position": "149"
+        }
+      ]
+    },
+    {
+      "title": "8. Commit and show site",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "executeTerminalCommand",
+          "command": "git add . && git commit -m '4. production deploy' && git push && gh browse -n | xargs -I {} echo {}/actions | xargs open"
+        }
+      ]
+    },
+    {
+      "title": "🛝 Highlights",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/29"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    }
+  ]
+}

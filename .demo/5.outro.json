@@ -1,0 +1,19 @@
+
+{
+  "$schema": "https://elio.dev/demo-time.schema.json",
+  "title": "5. Outro",
+  "description": "",
+  "demos": [
+    {
+      "title": "🛝 Open slides",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/30"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    }
+  ]
+}

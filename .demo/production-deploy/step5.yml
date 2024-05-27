@@ -1,0 +1,51 @@
+name: Validate deployment
+
+description: 'Run end-to-end tests to validate the deployment.'
+
+inputs:
+  website-url:
+    description: 'The URL of the website to test.'
+    required: true
+  test-title:
+    description: 'The title of the test report.'
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - name: Install dependencies
+      shell: bash
+      working-directory: ./e2e
+      run: |
+        npm ci
+
+    - name: Store Playwright's Version
+      shell: bash
+      working-directory: ./e2e
+      id: playwright-version
+      run: |
+        PLAYWRIGHT_VERSION=$(npm ls @playwright/test | grep @playwright | sed '$!d' | sed 's/.*@//')
+        echo "Playwright's Version: $PLAYWRIGHT_VERSION"
+        echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
+    - name: Cache Playwright Browsers for Playwright's Version
+      id: cache-playwright
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ env.PLAYWRIGHT_VERSION }}
+
+    - name: Install Playwright Browsers
+      if: steps.cache-playwright.outputs.cache-hit != 'true'
+      shell: bash
+      run: npx playwright install --with-deps
+
+    - name: Run e2e tests
+      working-directory: ./e2e
+      shell: bash
+      run: |
+        npx playwright test
+      env:
+        WEBSITE_URL: ${{ inputs.website-url }}
+        TEST_TITLE: ${{ inputs.test-title }}

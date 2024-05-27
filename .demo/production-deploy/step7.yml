@@ -1,0 +1,16 @@
+
+  production-e2e:
+    runs-on: ubuntu-latest
+    needs: production-deploy
+
+    defaults:
+      run:
+        working-directory: ./e2e
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/validate
+        with:
+          website-url: ${{ needs.production-deploy.outputs.website-url }}
+          test-title: "Production Test Report"

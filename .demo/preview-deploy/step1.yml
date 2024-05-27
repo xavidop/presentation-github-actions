@@ -1,0 +1,38 @@
+name: Deploy slides
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+
+env:
+  github_artifact: github-website
+  azure_artifact: azure-website
+  slides_artifact: slides
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get repository name
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY#$GITHUB_REPOSITORY_OWNER/}" >> $GITHUB_ENV
+
+      - name: Build
+        run: npm run build -- --base /${{ env.REPO_NAME }}/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          name: ${{ env.github_artifact }}
+          path: dist

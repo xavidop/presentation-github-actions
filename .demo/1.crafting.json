@@ -1,0 +1,110 @@
+{
+  "$schema": "https://elio.dev/demo-time.schema.json",
+  "title": "1. Crafting",
+  "description": "",
+  "demos": [
+    {
+      "title": "1. Craft a GitHub Actions workflow",
+      "steps": [
+        {
+          "action": "create",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./crafting/step1.yml"
+        },
+        {
+          "action": "open",
+          "path": "/.github/workflows/main.yml"
+        }
+      ]
+    },
+    {
+      "title": "🛝 Variables",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/15"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    },
+    {
+      "title": "2. Add env variables",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./crafting/step2.yml",
+            "CONTENT_POSITION": "8",
+            "HIGHLIGHT_POSITION": "9:12"
+          }
+        }
+      ]
+    },
+    {
+      "title": "3. Using the env variables",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "replace",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./crafting/step3.1.yml",
+          "position": "28:29"
+        },
+        {
+          "action": "replace",
+          "path": "/.github/workflows/main.yml",
+          "contentPath": "./crafting/step3.2.yml",
+          "position": "34:36"
+        },
+        {
+          "action": "highlight",
+          "path": "/.github/workflows/main.yml",
+          "position": "28:32"
+        }
+      ]
+    },
+    {
+      "title": "4. Add caching",
+      "steps": [
+        {
+          "action": "snippet",
+          "contentPath": "./snippets/insert_and_highlight.json",
+          "args": {
+            "CONTENT_PATH": "./crafting/step4.yml",
+            "CONTENT_POSITION": "24",
+            "HIGHLIGHT_POSITION": "21:24"
+          }
+        }
+      ]
+    },
+    {
+      "title": "5. Commit and show site",
+      "steps": [
+        {
+          "action": "unselect",
+          "path": "/.github/workflows/main.yml"
+        },
+        {
+          "action": "executeTerminalCommand",
+          "command": "git add . && git commit -m '1. crafting' && git push && gh browse -n | xargs -I {} echo {}/actions | xargs open"
+        }
+      ]
+    },
+    {
+      "title": "🛝 Highlights",
+      "steps": [{
+        "action": "executeVSCodeCommand",
+        "command": "simpleBrowser.show",
+        "args": "https://xavidop.github.io/github-actions-presentation-test/16"
+      }, {
+        "action": "executeVSCodeCommand",
+        "command": "workbench.action.closeSidebar"
+      }]
+    }
+  ]
+}
