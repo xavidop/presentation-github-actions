@@ -3,8 +3,9 @@
 This repository contains the slides and demos for the session "From Code to Cloud: Automated Deployments with GitHub Actions".
 
 ## Variables
-
+1. Preview environment
 - `WEBSITE_URL`: `https://xavidop.github.io/presentation-github-actions/`
+2. Production environment
 - `WEBSITE_URL`: `https://github-actions.xavidop.me`
 
 ## Before you start
