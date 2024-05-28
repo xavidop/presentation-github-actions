@@ -40,7 +40,7 @@
       "steps": [{
         "action": "executeVSCodeCommand",
         "command": "simpleBrowser.show",
-        "args": "https://xavidop.github.io/github-actions-presentation/27"
+        "args": "https://xavidop.github.io/presentation-github-actions/27"
       }, {
         "action": "executeVSCodeCommand",
         "command": "workbench.action.closeSidebar"
@@ -144,7 +144,7 @@
       "steps": [{
         "action": "executeVSCodeCommand",
         "command": "simpleBrowser.show",
-        "args": "https://xavidop.github.io/github-actions-presentation/29"
+        "args": "https://xavidop.github.io/presentation-github-actions/29"
       }, {
         "action": "executeVSCodeCommand",
         "command": "workbench.action.closeSidebar"

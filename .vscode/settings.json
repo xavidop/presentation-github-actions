@@ -7,4 +7,5 @@
     "activityBar.activeBackground": "#eaeef2"
   },
   "workbench.colorTheme": "GitHub Light Default",
+  "dbt.queryLimit": 500,
 }

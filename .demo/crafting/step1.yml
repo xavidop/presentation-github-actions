@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base /github-actions-presentation/
+        run: npm run build -- --base /presentation-github-actions/
 
       - uses: actions/upload-pages-artifact@v3
         with:
