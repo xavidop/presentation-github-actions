@@ -282,6 +282,7 @@ Highlights:
 - Values are masked in build outputs
 - Set as input or environment variable to use them
 
+---
 
 # Job interdependencies
 
