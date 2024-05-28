@@ -270,115 +270,23 @@ Highlights:
   - `GITHUB_REPOSITORY_OWNER`: `owner`
 
 ---
----
 
-# Highlights
+# Secrets
 
-1. Workflows created in `.github/workflows` directory
-2. Define workflow variables by using `env`
-3. Actions options can be added like `with`, `env`, etc.
-4. Variables and contexts can be used in the workflow
-5. Setting your variables like with `>> $GITHUB_ENV`
+- Sensitive information
+- Levels:
+  - Repository
+  - Environment
+  - Organization
+- Access policy on organization-level
+- Values are masked in build outputs
+- Set as input or environment variable to use them
 
-```bash
-echo "{environment_variable_name}={value}" >> $GITHUB_ENV
-```
 
-<br />
+# Job interdependencies
 
-[GitHub Variables](https://docs.github.com/en/actions/learn-github-actions/variables) - 
-[GitHub Context](https://docs.github.com/en/actions/learn-github-actions/contexts)
-
----
-layout: cover
-background: ./slides/deploy.jpg
----
-
-# From Artifact to Deployment: <br /> Deploy your website
-
-<!--
-- Start by a dependent job
-- Explain how to use the artifacts
-- Export the PDF
-- Deploy the website to GitHub Pages
-  - Using the `GITHUB_TOKEN` secret. It is a GitHub App installation access token, and is limited to the repository that triggers the workflow. [More info](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token)
-  - Explain that each job runs with default permissions: [workflow permissions](https://github.com/xavidop/github-actions-presentation-test/settings/actions)
-  - We can change the permissions
-- Using an environment and setting the URL
-- Upload artifacts
-
-Highlights:
-- Dependent jobs
-- Using artifacts
-- Permissions on the `GITHUB_TOKEN`
-- Environments
-- Publish to GitHub Pages
--->
-
----
----
-
-# Automatic token authentication
-
-- Each workflow job creates a `GITHUB_TOKEN` secret
-- Used to authenticate with GitHub API
-- `${{ secrets.GITHUB_TOKEN }}`
-
-<v-click>
-
-Comes with **default** permissions depending on the repo settings
-
-![](/slides/workflow-permissions.png)
-
-</v-click>
-
----
----
-
-# Elevate the GITHUB_TOKEN permissions
-
-```yaml {5-8}{lines:true}
-preview-deploy:
-  runs-on: ubuntu-latest
-  needs: build
-
-  permissions:
-    contents: read
-    pages: write
-    id-token: write
-```
-
----
----
-
-# Job output variables
-
-#### Step 1: Set the variable
-
-```yaml
-    steps:
-      - id: step1 # Required
-        run: |
-          # {name}={value}
-          echo "website=https://..." >> $GITHUB_OUTPUT
-```
-
-<v-click>
-
-#### Step 2: Define the output
-
-```yaml
-jobs:
-  job1:
-    outputs:
-      website: ${{ steps.step1.outputs.website }}
-```
-
-</v-click>
-
-<v-click>
-
-#### Step 3: Use the output
+- Job parallelism
+- Reuse outputs from previous jobs
 
 ```yaml
   job2:
@@ -386,43 +294,6 @@ jobs:
     steps:
       - run: echo ${{ needs.job1.outputs.website }}
 ```
-
-</v-click>
-
----
----
-
-# Highlights
-
-- You can depend on other jobs by using the `needs` key
-- Use the `actions/upload-artifact` action to upload artifacts
-- Permissions on the `GITHUB_TOKEN` can be changed
-- Set job output variables with `>> $GITHUB_OUTPUT`
-- Add information to the job summary via `>> $GITHUB_STEP_SUMMARY`
-
----
-layout: cover
-background: ./slides/testing.jpg
----
-
-# Ensuring Success: <br /> Validating the deployment
-
-<!--
-- Create a new dependent job for testing
-- Showing the environment and its variables/secrets
-- Adding extra caching
-- Conditions for the job/action
-- Job summary
-- Run the new flow and show the results
-
-Highlights:
-- Dependent jobs
-- Environment variables and secrets
-- Caching
-- Conditions
-- Job summary
--->
-
 ---
 ---
 
@@ -462,14 +333,32 @@ Conditions can be added to jobs and steps to control when they run
 </v-click>
 
 ---
+---
 
-# Highlights
+# Highlights - 1
+
+1. Workflows created in `.github/workflows` directory
+2. Define workflow variables by using `env`
+3. Actions options can be added like `with`, `env`, etc.
+4. Variables and contexts can be used in the workflow
+5. Set `secrets.{name}` to use the secret in the workflow
+6. Setting your variables like with `>> $GITHUB_ENV`
+
+```bash
+echo "{environment_variable_name}={value}" >> $GITHUB_ENV
+```
+
+<br />
+
+[GitHub Variables](https://docs.github.com/en/actions/learn-github-actions/variables) - 
+[GitHub Context](https://docs.github.com/en/actions/learn-github-actions/contexts)
+
+---
+
+# Highlights - 2
 
 - Use `actions/cache` to cache dependencies
 - Conditions can be added to jobs and steps to control when they run
-- Each environment can have its variables and secrets
-  - Using variables: `vars.{name}`
-  - Using secrets: `secrets.{name}`
 
 ---
 layout: cover
@@ -514,27 +403,12 @@ jobs:
 ```
 
 ---
-
-# Secrets
-
-- Sensitive information
-- Levels:
-  - Repository
-  - Environment
-  - Organization
-- Access policy on organization-level
-- Values are masked in build outputs
-- Set as input or environment variable to use them
-
----
 ---
 
 # Highlights
 
 - Use **environment-specific** variables and secrets
-- Reuse actions with **custom actions**
 - Set an **approval process** for the deployment
-- Set `secrets.{name}` to use the secret in the workflow
 
 ---
 layout: cover
@@ -583,6 +457,7 @@ act
 
 - GitHub Actions Marketplace
 - Create your actions and distribute them
+- Reusable workflows
 - Matrix builds -> automatically create multiple jobs
 - Use [GitHub Actions for VSCode extension](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-github-actions)
 
