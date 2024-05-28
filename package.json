@@ -1,5 +1,5 @@
 {
-  "name": "github-actions-presentation-test",
+  "name": "github-actions-presentation",
   "type": "module",
   "private": true,
   "scripts": {

@@ -76,7 +76,7 @@
       "steps": [{
         "action": "executeVSCodeCommand",
         "command": "simpleBrowser.show",
-        "args": "https://xavidop.github.io/github-actions-presentation-test/18"
+        "args": "https://xavidop.github.io/github-actions-presentation/18"
       }, {
         "action": "executeVSCodeCommand",
         "command": "workbench.action.closeSidebar"
@@ -98,7 +98,7 @@
       "steps": [{
         "action": "executeVSCodeCommand",
         "command": "simpleBrowser.show",
-        "args": "https://xavidop.github.io/github-actions-presentation-test/20"
+        "args": "https://xavidop.github.io/github-actions-presentation/20"
       }, {
         "action": "executeVSCodeCommand",
         "command": "workbench.action.closeSidebar"
@@ -150,7 +150,7 @@
       "steps": [{
         "action": "executeVSCodeCommand",
         "command": "simpleBrowser.show",
-        "args": "https://xavidop.github.io/github-actions-presentation-test/21"
+        "args": "https://xavidop.github.io/github-actions-presentation/21"
       }, {
         "action": "executeVSCodeCommand",
         "command": "workbench.action.closeSidebar"
