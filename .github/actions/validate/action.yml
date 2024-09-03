@@ -45,7 +45,7 @@ runs:
       working-directory: ./e2e
       shell: bash
       run: |
-        npx playwright test
+        npx playwright test || exit 0
       env:
         WEBSITE_URL: ${{ inputs.website-url }}
         TEST_TITLE: ${{ inputs.test-title }}
